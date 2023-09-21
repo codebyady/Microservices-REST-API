@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  patient-db:
+    image: mysql:latest
+    container_name: patient-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=patient_management
+      - MYSQL_PASSWORD=1234
+      - MYSQL_USER=sa
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+
+  patient-service:
+    depends_on: 
+      - patient-db
+    image: patientservice
+    container_name: patientservice
+    restart: unless-stopped
+    ports:
+      - "8081:8081"	
+
+  doctor-db:
+    image: mysql:latest
+    container_name: doctor-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=doctor_management
+      - MYSQL_PASSWORD=1234
+      - MYSQL_USER=sa
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3307:3306"
+
+  doctor-service:
+    depends_on: 
+      - doctor-db
+    image: doctorservice
+    container_name: doctorservice
+    restart: unless-stopped
+    ports:
+      - "8082:8082"	
+
+  appointment-db:
+    image: mysql:latest
+    container_name: appointment-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=appointment_management
+      - MYSQL_PASSWORD=1234
+      - MYSQL_USER=sa
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3308:3306"
+
+  appointment-service:
+    depends_on: 
+      - appointment-db
+    image: appointmentservice
+    container_name: appointmentservice
+    restart: unless-stopped
+    ports:
+      - "8083:8083"	
