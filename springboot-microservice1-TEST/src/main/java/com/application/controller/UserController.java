@@ -33,7 +33,7 @@ public class UserController {
         return "Received POST request with body: " + request;
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/getUsers/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> userOptional = userRepository.findById(id);
 

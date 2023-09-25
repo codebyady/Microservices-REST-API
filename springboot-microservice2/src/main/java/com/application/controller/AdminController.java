@@ -1,6 +1,7 @@
 package com.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
@@ -28,6 +29,18 @@ public class AdminController {
     public String createAdmin(@RequestBody Admin admin) {
         adminRepository.save(admin);
         return "Admin created successfully!";
+    }
+
+    @GetMapping("/getAdmins/{id}")
+    public ResponseEntity<Admin> getUserById(@PathVariable Long id) {
+        Optional<Admin> userOptional = adminRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            Admin admin = userOptional.get();
+            return ResponseEntity.ok(admin);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Delete an admin by ID
